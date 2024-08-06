@@ -10,7 +10,7 @@ repositories {
     flatDir { dirs mcreator_path + '/lib' }
 }
 
-group = 'net.mcreator.demojavaplugin'
+group = 'net.mcreator.liberate'
 version = new JsonSlurper().parse(file('src/main/resources/plugin.json'))['info']['version']
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -35,14 +35,24 @@ dependencies {
 
     // Use "export" configuration for dependencies that should be included in the plugin (if MCreator does not provide them)
     // export group: 'org.example', name: 'example-library', version: '1.2.3'
+
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
 }
 
 tasks.jar {
-    archiveFileName.set("demo-plugin.zip")
+    archiveFileName.set("liberate.zip")
 
     from {
         configurations.export.collect { it.isDirectory() ? it : zipTree(it) }
     }
+
+    manifest{
+        attributes("Can-Redefine-Classes": true,
+                "Can-Retransform-Classes": true,
+                "Premain-Class": "org.cdc.liberate.AgentMain");
+    }
+
 }
 
 tasks.register('runMCreatorWithPlugin', JavaExec) {
