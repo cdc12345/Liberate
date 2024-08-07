@@ -10,7 +10,7 @@ repositories {
     flatDir { dirs mcreator_path + '/lib' }
 }
 
-group = 'net.mcreator.liberate'
+group = 'org.cdc.liberate'
 version = new JsonSlurper().parse(file('src/main/resources/plugin.json'))['info']['version']
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -50,7 +50,7 @@ tasks.jar {
     manifest{
         attributes("Can-Redefine-Classes": true,
                 "Can-Retransform-Classes": true,
-                "Premain-Class": "org.cdc.liberate.AgentMain");
+                "Premain-Class": "org.cdc.liberate.AgentMain")
     }
 
 }

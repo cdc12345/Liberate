@@ -5,16 +5,12 @@ import javassist.CtClass;
 import javassist.CtMethod;
 import javassist.NotFoundException;
 import net.mcreator.io.net.api.D8WebAPI;
-import net.mcreator.plugin.MCREvent;
+import org.cdc.liberate.events.LiberateEvent;
 import org.cdc.liberate.events.net.D8WebAPIInitEvent;
 import org.cdc.liberate.transfer.ClassVisitor;
 import org.cdc.liberate.transfer.MethodVisitor;
 
-import java.util.logging.Logger;
-
 public class D8WebAPIClassVisitor extends ClassVisitor {
-
-    private static final Logger LOG = Logger.getLogger("D8WClass");
 
     public D8WebAPIClassVisitor(){
         super(1);
@@ -44,7 +40,7 @@ public class D8WebAPIClassVisitor extends ClassVisitor {
 
     public static boolean fireEvent1(D8WebAPI instance, org.apache.logging.log4j.Logger LOG){
         var event = new D8WebAPIInitEvent(instance,LOG);
-        MCREvent.event(event);
+        LiberateEvent.eventSync(event);
         return event.isCanceled();
     }
 }

@@ -22,9 +22,9 @@ public class ClassVisitor {
         this.remainTask = taskNum;
     }
 
-    ClassLoader classLoader;
-    Class<?> classBeingRedefined;
-    ProtectionDomain protectionDomain;
+    protected ClassLoader classLoader;
+    protected Class<?> classBeingRedefined;
+    protected ProtectionDomain protectionDomain;
 
     public void visitClass(CtClass ctClass , Module module, String className, byte[] bytes) throws NotFoundException {
         for (CtMethod method:ctClass.getDeclaredMethods()){

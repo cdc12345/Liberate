@@ -6,7 +6,6 @@ import javassist.NotFoundException;
 
 import java.io.IOException;
 import java.lang.instrument.ClassFileTransformer;
-import java.lang.instrument.IllegalClassFormatException;
 import java.lang.reflect.InvocationTargetException;
 import java.security.ProtectionDomain;
 import java.util.ArrayList;
@@ -15,7 +14,8 @@ import java.util.List;
 public class AgentClassTransfer implements ClassFileTransformer {
 
     private final String[] classVisitors = new String[]{
-            "org.cdc.liberate.visitors.D8WebAPIClassVisitor"
+            "org.cdc.liberate.visitors.D8WebAPIClassVisitor",
+            "org.cdc.liberate.visitors.WorkspaceGeneratorSetupClassVisitor"
     };
 
     private int taskOrder;
@@ -37,7 +37,6 @@ public class AgentClassTransfer implements ClassFileTransformer {
             try {
                 var ctClass = pool.get(className);
                 for (ClassVisitor visitor:visitors){
-                    //如果该visitor的任务已经全部完成,那么就不管他了,直接跳过
                     if (visitor.isFinished()){
                         continue;
                     }
